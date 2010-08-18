@@ -22,5 +22,6 @@ Compile and Build
 	this will create a jar archive in dist/lib and bin which containing the shell script
 
 Run
-	To run the server go to bin folder and run "./logging-server-{version}.sh port
-	where port is the port number the logging server needed to listening for logs
+	To run the server go to bin folder and run "./logging-server-{version}.sh -p port -d log_directory
+	where port is the port number the logging server needed to listening for logs (default 2222)
+	log_dirctory is the directory which saves the log files		default (minisiplogs)

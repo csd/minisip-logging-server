@@ -13,15 +13,19 @@ import java.net.Socket;
  */
 public class LoggingServer {
 
-	static String logDirectory = "logs";
+	static String logDirectory = null;
 	static Socket clientSocket = null;
 	static ServerSocket serverSocket = null;
 
 	public static void main(String args[]) {
 
 		//TCP port on which it listens for logs
-		int port_number = Integer.parseInt(args[0]);
-
+		int port_number=0;
+		port_number = Integer.parseInt(args[0]);
+		 
+		//Log directory to save the log files
+		logDirectory = args[1];
+		
 		//Creates the logging folder
 		File loggingDirectory = new File(logDirectory);
 		if(!loggingDirectory.exists()){
