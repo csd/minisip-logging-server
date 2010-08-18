@@ -9,7 +9,7 @@ import java.net.Socket;
 class ServerWorker extends Thread {
 
 	DataInputStream is = null;
-	File fileOut;
+	File logFile;
 	FileOutputStream streamOut;
 	
 	Socket clientSocket = null;
@@ -27,22 +27,27 @@ class ServerWorker extends Thread {
 		
 		try {
 			is = new DataInputStream(clientSocket.getInputStream());
-			fileOut = new File(clientIP+"-MiniSIP.log");
-			streamOut = new FileOutputStream(fileOut);
+			logFile = new File(LoggingServer.logDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
+			streamOut = new FileOutputStream(logFile,true);
 			
 			// Reads from the stream and writes to the log file
-			
 			int c;
-			while ((c = is.read()) != -1) {
-				streamOut.write(c);
+			while (true) {
+				//Waits the thread
+				try{
+					Thread.sleep(10);
+				}catch(Exception e){
+					System.out.println("Error blocking the thread");
+				}
+				
+				if((c = is.read()) != -1){
+					streamOut.write(c);
+					streamOut.flush();
+				}
 			}
-
-			streamOut.close();
-			is.close();
-			clientSocket.close();
-			
+		
 		} catch (IOException e) {
-			System.out.println("Error reading from the socket stream ");
+			System.out.println("Error reading from the socket stream " + e);
 		}
 	}
 }

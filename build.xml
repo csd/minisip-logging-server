@@ -1,0 +1,33 @@
+<project name="MiniSIP-Logging" default="dist" basedir=".">
+  
+  	<property name="src" location="src"/>
+  	<property name="build" location="build"/>
+  	<property name="dist"  location="dist"/>
+	<property name="bin"  location="bin"/>
+
+  	<target name="init">
+    		<mkdir dir="${build}"/>
+  	</target>
+
+  	<target name="compile" depends="init">
+    		<javac srcdir="${src}" destdir="${build}"/>
+  	</target>
+
+  	<target name="dist" depends="compile">
+    		<mkdir dir="${dist}/lib"/>
+		<mkdir dir="${bin}"/>
+    		<jar jarfile="${dist}/lib/minisip-logging-server-0.1.jar" basedir="${build}">
+			<manifest>
+        			<attribute name="Main-Class" value="csd.minisip.logging.LoggingServer" />
+      			</manifest>
+		</jar>
+		<copy file="${src}/logging-server-0.1.sh" tofile="${bin}/logging-server-0.1.sh" overwrite="true" />
+		<delete dir="${build}"/>
+	</target>
+
+  	<target name="clean">
+		<delete dir="${bin}"/>
+    		<delete dir="${build}"/>
+    		<delete dir="${dist}"/>
+  	</target>
+</project>

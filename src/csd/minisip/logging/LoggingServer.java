@@ -1,5 +1,6 @@
 package csd.minisip.logging;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,6 +13,7 @@ import java.net.Socket;
  */
 public class LoggingServer {
 
+	static String logDirectory = "logs";
 	static Socket clientSocket = null;
 	static ServerSocket serverSocket = null;
 
@@ -20,6 +22,14 @@ public class LoggingServer {
 		//TCP port on which it listens for logs
 		int port_number = Integer.parseInt(args[0]);
 
+		//Creates the logging folder
+		File loggingDirectory = new File(logDirectory);
+		if(!loggingDirectory.exists()){
+			if(loggingDirectory.mkdir()){
+				System.out.println("Creating the Log directory in " + logDirectory);
+			}
+		}
+		
 		try {
 			serverSocket = new ServerSocket(port_number);
 			System.out.println("Logging Server started on port " + port_number);
