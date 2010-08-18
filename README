@@ -1,1 +1,26 @@
-Coming soon...
+MiniSIP Logging Server
+
+This is the logging server which receives logging messages from minisip clients.
+
+This folder contains following;
+
+--src
+----The source folder (java source files) 
+----server startup shell script
+
+--build.xml
+	This is the Ant build file
+
+Compile and Run
+
+Prerequisites
+	java
+	apache ant
+
+Compile and Build 
+	in the root folder use "ant dist"
+	this will create a jar archive in dist/lib and bin which containing the shell script
+
+Run
+	To run the server go to bin folder and run "./logging-server-{version}.sh port
+	where port is the port number the logging server needed to listening for logs
