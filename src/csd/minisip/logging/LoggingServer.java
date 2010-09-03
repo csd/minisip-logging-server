@@ -27,9 +27,6 @@ public class LoggingServer {
 		// Log directory to save the log files
 		logDirectory = args[1];
 
-		// Crash report directory
-		crashDirectory = args[2];
-		
 		// Creates the logging folder
 		File loggingDirectory = new File(logDirectory);
 		if (!loggingDirectory.exists()) {
@@ -39,6 +36,18 @@ public class LoggingServer {
 			}
 		}
 
+		// Crash report directory
+		crashDirectory = args[2];
+		
+		// Creates the Crash
+		File crashReportDirectory = new File(crashDirectory);
+		if (!crashReportDirectory.exists()) {
+			if (crashReportDirectory.mkdir()) {
+				System.out.println("Creating the Crash report directory in "
+						+ crashDirectory);
+			}
+		}
+		
 		try {
 			serverSocket = new ServerSocket(port_number);
 			System.out.println("Logging Server started on port " + port_number);

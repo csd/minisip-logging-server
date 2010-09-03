@@ -9,24 +9,19 @@ then
 		PORT=$2
 	fi
 
-	if [ "$3" = "-p" ]
-	then
-		PORT=$4
-	fi
-
 	LOG_DIRECTORY="../minisiplogs"
-	if [ "$1" = "-d" ]
+	if [ "$2" = "-ld" ]
 	then 
 		LOG_DIRECTORY=$2
 	fi
 
-	if [ "$3" = "-d" ]
+	CRASH_DIRECTORY="../minisipcrash_report"
+	if [ "$3" = "-cd" ]
 	then
-		LOG_DIRECTORY=$4
-	fi
-	
+		CRASH_DIRECTORY=$3
+	fi	
 
-	$JAVA_HOME -cp ".:${CLASSPATH}" csd.minisip.logging.LoggingServer $PORT $LOG_DIRECTORY
+	$JAVA_HOME/bin/java -cp ".:${CLASSPATH}" csd.minisip.logging.LoggingServer $PORT $LOG_DIRECTORY $CRASH_DIRECTORY
 else
 	echo ""
 	echo "Could not locate the java executable."
