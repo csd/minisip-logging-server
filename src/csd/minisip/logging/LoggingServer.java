@@ -20,23 +20,16 @@ public class LoggingServer {
 
 	public static void main(String args[]) {
 
-		if(args.length!=6){
-			System.out.println("Invalid Arguements");
-			System.out.println("Usage:");
-			System.out.println("-p <port> -ld <log directory> -cd <crash directory>");
-			System.exit(1);
-		}
-		
 		// TCP port on which it listens for logs
 		int port_number = 0;
-		port_number = Integer.parseInt(args[1]);
+		port_number = Integer.parseInt(args[0]);
 
 		// Log directory to save the log files
-		logDirectory = args[3];
-		
-		//Crash directory to save the crash reports
-		crashDirectory= args[5];
+		logDirectory = args[1];
 
+		// Crash report directory
+		crashDirectory = args[2];
+		
 		// Creates the logging folder
 		File loggingDirectory = new File(logDirectory);
 		if (!loggingDirectory.exists()) {
