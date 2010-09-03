@@ -1,6 +1,6 @@
 if [ $JAVA_HOME ]
+	
 then
-	JAVA_EXE=$JAVA_HOME/bin/java
 	CLASSPATH="../dist/lib/minisip-logging-server-0.1.jar"
 	
 	PORT=2222
@@ -26,7 +26,11 @@ then
 	fi
 	
 
-	$JAVA_EXE -cp ".:${CLASSPATH}" csd.minisip.logging.LoggingServer $PORT $LOG_DIRECTORY
+	$JAVA_HOME -cp ".:${CLASSPATH}" csd.minisip.logging.LoggingServer $PORT $LOG_DIRECTORY
 else
-	echo "JAVA_HOME Environment variable not set"
+	echo "Could not locate the java executable."
+	echo "Please set the JAVA_HOME environment variable to point at it."
+	echo ""
+	echo "For example using this command:"
+	echo "echo \"export JAVA_HOME=/usr/bin/java\" >> ~/.bashrc;. ~/.bashrc"
 fi
