@@ -10,7 +10,9 @@ class ServerWorker extends Thread {
 
 	DataInputStream is = null;
 	File logFile;
-	FileOutputStream streamOut;
+	File crashReportFile;
+	FileOutputStream logStreamOut;
+	FileOutputStream crashStreamOut;
 	
 	Socket clientSocket = null;
 	
@@ -27,11 +29,17 @@ class ServerWorker extends Thread {
 		
 		try {
 			is = new DataInputStream(clientSocket.getInputStream());
-			logFile = new File(LoggingServer.logDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
-			streamOut = new FileOutputStream(logFile,true);
-			
+			//hack for the time being
+			if(!("192.16.126.67".equals(clientIP))){
+				logFile = new File(LoggingServer.logDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
+				logStreamOut = new FileOutputStream(logFile,true);
+				
+			}else{
+				return;
+			}
 			// Reads from the stream and writes to the log file
-			int c;
+			int c,count=0;
+			String type=null;
 			while (true) {
 				//Waits the thread
 				try{
@@ -41,8 +49,24 @@ class ServerWorker extends Thread {
 				}
 				
 				if((c = is.read()) != -1){
-					streamOut.write(c);
-					streamOut.flush();
+					//check for crash report and logs
+					if(count == 0){
+						if((char)c!='<'){
+							crashReportFile = new File(LoggingServer.crashDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
+							crashStreamOut = new FileOutputStream(crashReportFile,true);
+							type="crash";
+						}else{
+							type="logging";
+						}
+					}
+					count++;
+					
+					if("crash".equals(type)){
+						crashStreamOut.write(c);
+					}
+					if("logging".equals(type)){
+						logStreamOut.write(c);
+					}
 				}
 			}
 		
