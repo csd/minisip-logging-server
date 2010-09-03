@@ -28,9 +28,11 @@ then
 
 	$JAVA_HOME -cp ".:${CLASSPATH}" csd.minisip.logging.LoggingServer $PORT $LOG_DIRECTORY
 else
+	echo ""
 	echo "Could not locate the java executable."
 	echo "Please set the JAVA_HOME environment variable to point at it."
 	echo ""
-	echo "For example using this command:"
+	echo "On Linux you can use this command to do that:"
 	echo "echo \"export JAVA_HOME=/usr/bin/java\" >> ~/.bashrc;. ~/.bashrc"
+	echo ""
 fi
