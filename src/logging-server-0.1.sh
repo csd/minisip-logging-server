@@ -1,5 +1,9 @@
+if [ -f /usr/bin/java ]
+then
+    export JAVA_HOME=/usr
+fi
+
 if [ $JAVA_HOME ]
-	
 then
         # Changing the pwd to the location of this very file
 	abspath=$(cd ${0%/*} && echo $PWD/${0##*/})
@@ -35,4 +39,5 @@ else
 	echo "On Linux you can use this command to do that:"
 	echo "echo \"export JAVA_HOME=/usr\" >> ~/.bashrc;. ~/.bashrc"
 	echo ""
+	sleep 2
 fi
