@@ -52,7 +52,7 @@ public class LoggingServer {
 			serverSocket = new ServerSocket(port_number);
 			System.out.println("Logging Server started on port " + port_number);
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println("[LoggingSever] Port " + port_number + " is already in use");
 		}
 
 		while (true) {
@@ -61,7 +61,7 @@ public class LoggingServer {
 				ServerWorker handler = new ServerWorker(clientSocket);
 				handler.start();
 			} catch (IOException e) {
-				System.out.println("Error accepting requests");
+				System.out.println("[LoggingServer] Error accepting requests");
 			}
 		}
 	}

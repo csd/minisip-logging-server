@@ -30,41 +30,41 @@ class ServerWorker extends Thread {
 		try {
 			is = new DataInputStream(clientSocket.getInputStream());
 			//hack for the time being
-			if(!("192.16.126.67".equals(clientIP))){
-				logFile = new File(LoggingServer.logDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
-				logStreamOut = new FileOutputStream(logFile,true);
-				
-			}else{
+			if(("192.16.126.67".equals(clientIP))){
 				return;
 			}
+
 			// Reads from the stream and writes to the log file
 			int c,count=0;
 			String type=null;
 			while (true) {
 				//Waits the thread
 				try{
-					Thread.sleep(10);
+					Thread.sleep(5);
 				}catch(Exception e){
 					System.out.println("Error blocking the thread");
 				}
 				
 				if((c = is.read()) != -1){
+					
 					//check for crash report and logs
 					if(count == 0){
-						if((char)c!='<'){
+						if((char)c=='C'){
 							crashReportFile = new File(LoggingServer.crashDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
 							crashStreamOut = new FileOutputStream(crashReportFile,true);
 							type="crash";
 						}else{
+							logFile = new File(LoggingServer.logDirectory+"/"+clientIP+ "-MiniSIP"+System.currentTimeMillis()+".log");
+							logStreamOut = new FileOutputStream(logFile,true);
 							type="logging";
 						}
 					}
 					count++;
 					
-					if("crash".equals(type)){
+					if("crash".equals(type) && count > 6){
 						crashStreamOut.write(c);
 					}
-					if("logging".equals(type)){
+					if("logging".equals(type) && count > 4){
 						logStreamOut.write(c);
 					}
 				}
