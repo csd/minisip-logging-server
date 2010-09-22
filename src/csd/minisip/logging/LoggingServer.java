@@ -14,7 +14,6 @@ import java.net.Socket;
 public class LoggingServer {
 
 	static String logDirectory=null;
-	static String crashDirectory=null;
 	static Socket clientSocket = null;
 	static ServerSocket serverSocket = null;
 
@@ -36,18 +35,6 @@ public class LoggingServer {
 			}
 		}
 
-		// Crash report directory
-		crashDirectory = args[2];
-		
-		// Creates the Crash
-		File crashReportDirectory = new File(crashDirectory);
-		if (!crashReportDirectory.exists()) {
-			if (crashReportDirectory.mkdir()) {
-				System.out.println("Creating the Crash report directory in "
-						+ crashDirectory);
-			}
-		}
-		
 		try {
 			serverSocket = new ServerSocket(port_number);
 			System.out.println("Logging Server started on port " + port_number);
