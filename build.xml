@@ -5,7 +5,7 @@
   	<property name="dist"  location="dist"/>
 	<property name="bin"  location="bin"/>
 
-  	<target name="init">
+  	<target name="init" depends="clean">
     		<mkdir dir="${build}"/>
   	</target>
 
@@ -16,12 +16,15 @@
   	<target name="dist" depends="compile">
     		<mkdir dir="${dist}/lib"/>
 		<mkdir dir="${bin}"/>
-    		<jar jarfile="${dist}/lib/minisip-logging-server-0.1.jar" basedir="${build}">
+		<mkdir dir="/etc/minisip_logging/lib"/> 
+   		<jar jarfile="${dist}/lib/minisip-logging-server-0.1.jar" basedir="${build}">
 			<manifest>
         			<attribute name="Main-Class" value="csd.minisip.logging.LoggingServer" />
       			</manifest>
 		</jar>
+		<copy file="${dist}/lib/minisip-logging-server-0.1.jar" tofile="/etc/minisip_logging/lib/minisip-logging-server-0.1.jar" overwrite="true" />
 		<copy file="${src}/logging-server-0.1.sh" tofile="${bin}/logging-server-0.1.sh" overwrite="true" />
+		<copy file="${src}/logging-server-0.1.sh" tofile="/etc/init.d/minisip_logging" overwrite="true" />
 		<delete dir="${build}"/>
 	</target>
 

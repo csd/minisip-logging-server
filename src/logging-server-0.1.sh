@@ -10,15 +10,15 @@ then
 	path_only=`dirname "$abspath"`
 	cd $path_only
 
-	CLASSPATH="../dist/lib/minisip-logging-server-0.1.jar"
+	CLASSPATH="/etc/minisip_logging/lib/minisip-logging-server-0.1.jar"
 	
-	PORT=2222
+	PORT=8700
 	if [ "$1" = "-p" ]
 	then
 		PORT=$2
 	fi
 
-	LOG_DIRECTORY="../minisiplogs"
+	LOG_DIRECTORY=$HOME/minisiplogs
 	if [ "$2" = "-ld" ]
 	then 
 		LOG_DIRECTORY=$2
